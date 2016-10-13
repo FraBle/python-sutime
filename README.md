@@ -14,8 +14,8 @@ This library provides a simple access to SUTime functions in Python.
 
 ```bash
 >> pip install sutime
->> # install all Java dependencies via Maven in ./jars
->> mvn -f java/pom.xml dependency:copy-dependencies -DoutputDirectory=./jars
+>> # use package pom.xml to install all Java dependencies via Maven into ./jars
+>> mvn dependency:copy-dependencies -DoutputDirectory=./jars
 ```
 
 #### Example
