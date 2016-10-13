@@ -58,7 +58,6 @@ class SUTime(object):
             self._lock.release()
 
     def _start_jvm(self):
-        print(self._classpath)
         if jpype.isJVMStarted() is not 1:
             jpype.startJVM(
                 jpype.getDefaultJVMPath(),
