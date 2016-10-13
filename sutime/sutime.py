@@ -13,7 +13,7 @@ class SUTime(object):
     """Python wrapper for SUTime (CoreNLP) by Stanford.
 
     Attributes:
-        jars: Path to the SUTime Java dependencies.
+        jars: Paths to the SUTime Java dependencies.
         mark_time_ranges: Optional attribute to specify CoreNLP property
             sutime.markTimeRanges. Default is False.
             "Tells sutime to mark phrases such as 'From January to March'
