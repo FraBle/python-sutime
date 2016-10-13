@@ -1,0 +1,7 @@
+test:
+    override:
+        - py.test
+
+dependencies: 
+  pre:
+    - mvn dependency:copy-dependencies -DoutputDirectory=./jars
