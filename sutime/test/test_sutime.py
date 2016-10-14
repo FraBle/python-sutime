@@ -88,3 +88,12 @@ def test_parse_duration_range_with_mark_time_ranges(sutime_with_mark_time_ranges
 
     end = result[1][u'value'][u'end']
     assert parser.parse(end).time() == three_pm
+
+
+def test_parse_christmas(sutime_with_mark_time_ranges):
+    result = sutime_with_mark_time_ranges.parse('christmas eve')
+
+    assert len(result) == 1
+
+    assert result[0][u'type'] == u'SET'
+    assert result[0][u'value'] == u'XXXX-12-24'
