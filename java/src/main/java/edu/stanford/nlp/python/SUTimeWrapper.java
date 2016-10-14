@@ -49,8 +49,7 @@ public class SUTimeWrapper {
         for (CoreMap coreMap : timexAnnotations) {
             List<CoreLabel> tokens = coreMap.get(CoreAnnotations.TokensAnnotation.class);
             String type = coreMap.get(TimeAnnotations.TimexAnnotation.class).timexType();
-            SUTime.Time durationBegin = coreMap.get(TimeExpression.Annotation.class).getTemporal().getRange().begin();
-            SUTime.Time durationEnd = coreMap.get(TimeExpression.Annotation.class).getTemporal().getRange().end();
+            SUTime.Range range = coreMap.get(TimeExpression.Annotation.class).getTemporal().getRange();
 
             HashMap<String, Object> resultEntry = new HashMap<>();
             resultEntry.put("text", coreMap.toString());
@@ -58,13 +57,17 @@ public class SUTimeWrapper {
             resultEntry.put("end", tokens.get(tokens.size() - 1).get(CoreAnnotations.CharacterOffsetEndAnnotation.class));
             resultEntry.put("type", type);
 
-            if (type.equals("DURATION") && durationBegin != null && durationEnd != null){
+            if (type.equals("DURATION") && range != null && range.begin() != null && range.end() != null){
                 HashMap<String, String> valueMap = new HashMap<>();
-                valueMap.put("begin", durationBegin.toISOString());
-                valueMap.put("end", durationEnd.toISOString());
+                valueMap.put("begin", range.begin().toISOString());
+                valueMap.put("end", range.end().toISOString());
                 resultEntry.put("value", valueMap);
             } else{
-                resultEntry.put("value", coreMap.get(TimeExpression.Annotation.class).getTemporal().toISOString());
+                String isoString = coreMap.get(TimeExpression.Annotation.class).getTemporal().toISOString();
+                if (isoString != null)
+                    resultEntry.put("value", isoString);
+                else
+                    resultEntry.put("value", coreMap.get(TimeExpression.Annotation.class).getTemporal().toString());
             }
 
             result.add(resultEntry);
