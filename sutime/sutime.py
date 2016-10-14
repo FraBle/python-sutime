@@ -13,7 +13,9 @@ class SUTime(object):
     """Python wrapper for SUTime (CoreNLP) by Stanford.
 
     Attributes:
-        jars: Paths to the SUTime Java dependencies.
+        jars: List of paths to the SUTime Java dependencies.
+        jvm_started: Optional attribute to specify if the JVM has already been
+            started (with all Java dependencies loaded).
         mark_time_ranges: Optional attribute to specify CoreNLP property
             sutime.markTimeRanges. Default is False.
             "Tells sutime to mark phrases such as 'From January to March'
@@ -31,16 +33,18 @@ class SUTime(object):
         'slf4j-simple-1.7.21.jar'
     }
 
-    def __init__(self, jars, mark_time_ranges=False, include_range=False):
+    def __init__(self, jars=[], jvm_started=False, mark_time_ranges=False, include_range=False):
         """Initializes SUTime.
         """
         self.mark_time_ranges = mark_time_ranges
         self.include_range = include_range
         self.jars = jars
         self._is_loaded = False
-        self._classpath = self._create_classpath()
         self._lock = threading.Lock()
-        self._start_jvm()
+
+        if not jvm_started:
+            self._classpath = self._create_classpath()
+            self._start_jvm()
 
         try:
             # make it thread-safe
