@@ -49,8 +49,14 @@ public class SUTimeWrapper {
         for (CoreMap coreMap : timexAnnotations) {
             List<CoreLabel> tokens = coreMap.get(CoreAnnotations.TokensAnnotation.class);
             String type = coreMap.get(TimeAnnotations.TimexAnnotation.class).timexType();
-            SUTime.Range range = coreMap.get(TimeExpression.Annotation.class).getTemporal().getRange();
-
+            SUTime.Range range = null;
+            if (type.equals("DURATION")){
+                try{
+                    range = coreMap.get(TimeExpression.Annotation.class).getTemporal().getRange();
+                }catch(IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
+            }
             HashMap<String, Object> resultEntry = new HashMap<>();
             resultEntry.put("text", coreMap.toString());
             resultEntry.put("start", tokens.get(0).get(CoreAnnotations.CharacterOffsetBeginAnnotation.class));
