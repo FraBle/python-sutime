@@ -8,12 +8,12 @@ from sutime import SUTime
 
 @pytest.fixture(scope='module')
 def sutime():
-    return SUTime(jars=os.path.join(*[os.path.dirname(__file__), '..', '..', 'jars']))
+    return SUTime(jars=os.path.join(*[os.path.dirname(__file__), os.pardir, os.pardir, 'jars']))
 
 
 @pytest.fixture(scope='module')
 def sutime_with_mark_time_ranges():
-    return SUTime(jars=os.path.join(*[os.path.dirname(__file__), '..', '..', 'jars']), mark_time_ranges=True)
+    return SUTime(jars=os.path.join(*[os.path.dirname(__file__), os.pardir, os.pardir, 'jars']), mark_time_ranges=True)
 
 
 @pytest.fixture
@@ -97,3 +97,9 @@ def test_parse_christmas(sutime_with_mark_time_ranges):
 
     assert result[0][u'type'] == u'SET'
     assert result[0][u'value'] == u'XXXX-12-24'
+
+
+def test_sunday_night(sutime_with_mark_time_ranges):
+    result = sutime_with_mark_time_ranges.parse(
+        'Mary had spent Sunday night with us.')
+    assert len(result) == 1
