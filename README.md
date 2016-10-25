@@ -26,8 +26,9 @@ from sutime import SUTime
 
 if __name__ == '__main__':
     test_case = u'I need a desk for tomorrow from 2pm to 3pm'
-    jars = os.path.join(os.path.dirname(__file__), 'jars')
-    sutime = SUTime(jars, mark_time_ranges=True)
+    
+    jar_files = os.path.join(os.path.dirname(__file__), 'jars')
+    sutime = SUTime(jars=jar_files, mark_time_ranges=True)
 
     print(json.dumps(sutime.parse(test_case), sort_keys=True, indent=4))
 ```
@@ -58,9 +59,11 @@ Other examples can be found in the test directory.
 
 #### Functions
 ```python
-SUTime(jars, mark_time_ranges=False, include_range=False)
+SUTime(jars=[], jvm_started=False, mark_time_ranges=False, include_range=False)
     """
-    jars: Paths to the SUTime Java dependencies.
+    jars: List of paths to the SUTime Java dependencies.
+    jvm_started: Optional attribute to specify if the JVM has already been
+        started (with all Java dependencies loaded).
     mark_time_ranges: Optional attribute to specify CoreNLP property
         sutime.markTimeRanges. Default is False.
         "Tells sutime to mark phrases such as 'From January to March'
