@@ -55,7 +55,7 @@ Result:
 ]
 ```
 
-Other examples can be found in the test directory.
+Other examples can be found in the [test](https://github.com/FraBle/python-sutime/blob/master/sutime/test/test_sutime.py) directory.
 
 #### Functions
 ```python
