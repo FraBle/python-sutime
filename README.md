@@ -81,6 +81,7 @@ sutime.parse(input_str):
 
     Args:
         input_str: The input as string that has to be parsed.
+        reference_date: Optional reference data for SUTime.
 
     Returns:
         A list of dicts with the result from the SUTimeWrapper.annotate()
