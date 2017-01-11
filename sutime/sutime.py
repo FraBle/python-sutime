@@ -87,7 +87,7 @@ class SUTime(object):
                 'Not all necessary Java dependencies have been downloaded!')
         return os.pathsep.join(jars)
 
-    def parse(self, input_str):
+    def parse(self, input_str, reference_date=''):
         """Parses datetime information out of string input.
 
         It invokes the SUTimeWrapper.annotate() function in Java.
@@ -104,4 +104,7 @@ class SUTime(object):
         """
         if self._is_loaded is False:
             raise RuntimeError('Please load SUTime first!')
+
+        if reference_date:
+            return json.loads(self._sutime.annotate(input_str, reference_date))
         return json.loads(self._sutime.annotate(input_str))
