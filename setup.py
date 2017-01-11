@@ -9,7 +9,7 @@ from setuptools import setup
 
 setup(
     name='sutime',
-    version='0.1.3',
+    version='0.2.0',
     description='A Python wrapper for Stanford CoreNLP\'s SUTime',
     url='https://github.com/FraBle/python-sutime',
     author='Frank Blechschmidt',
