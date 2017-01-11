@@ -1,7 +1,7 @@
 import os
 import pytest
 import aniso8601
-from datetime import datetime, timedelta
+from datetime import date, time, timedelta
 from dateutil import parser
 from sutime import SUTime
 
@@ -17,34 +17,52 @@ def sutime_with_mark_time_ranges():
 
 
 @pytest.fixture
-def test_input_duration():
+def input_duration():
     return 'I need a desk for tomorrow from 2pm for 2 hours'
 
 
 @pytest.fixture
-def test_input_duration_range():
+def input_duration_range():
     return 'I need a desk for tomorrow from 2pm to 3pm'
+
+
+@pytest.fixture
+def input_christmas_eve():
+    return 'christmas eve'
+
+
+@pytest.fixture
+def input_sunday_night():
+    return 'Mary had spent Sunday night with us.'
+
+
+@pytest.fixture
+def input_today():
+    return 'I have written a test today.'
 
 
 @pytest.fixture(scope='module')
 def tomorrow():
-    return datetime.now().date() + timedelta(days=1)
+    return date.today() + timedelta(days=1)
 
 
 @pytest.fixture(scope='module')
 def two_pm():
-    return datetime.now().replace(
-        hour=14, minute=0, second=0, microsecond=0).time()
+    return time(hour=14)
 
 
 @pytest.fixture(scope='module')
 def three_pm():
-    return datetime.now().replace(
-        hour=15, minute=0, second=0, microsecond=0).time()
+    return time(hour=15)
 
 
-def test_parse_duration(sutime, test_input_duration, tomorrow, two_pm):
-    result = sutime.parse(test_input_duration)
+@pytest.fixture(scope='module')
+def reference_date():
+    return date(2017, 1, 9)
+
+
+def test_parse_duration(sutime, input_duration, tomorrow, two_pm):
+    result = sutime.parse(input_duration)
 
     assert len(result) == 3
 
@@ -58,8 +76,8 @@ def test_parse_duration(sutime, test_input_duration, tomorrow, two_pm):
     assert aniso8601.parse_duration(result[2][u'value']) == timedelta(hours=2)
 
 
-def test_parse_duration_range(sutime, test_input_duration_range, tomorrow, two_pm, three_pm):
-    result = sutime.parse(test_input_duration_range)
+def test_parse_duration_range(sutime, input_duration_range, tomorrow, two_pm, three_pm):
+    result = sutime.parse(input_duration_range)
 
     assert len(result) == 3
 
@@ -73,8 +91,8 @@ def test_parse_duration_range(sutime, test_input_duration_range, tomorrow, two_p
     assert parser.parse(result[2][u'value']).time() == three_pm
 
 
-def test_parse_duration_range_with_mark_time_ranges(sutime_with_mark_time_ranges, test_input_duration_range, tomorrow, two_pm, three_pm):
-    result = sutime_with_mark_time_ranges.parse(test_input_duration_range)
+def test_parse_duration_range_with_mark_time_ranges(sutime_with_mark_time_ranges, input_duration_range, tomorrow, two_pm, three_pm):
+    result = sutime_with_mark_time_ranges.parse(input_duration_range)
 
     assert len(result) == 2
 
@@ -90,8 +108,8 @@ def test_parse_duration_range_with_mark_time_ranges(sutime_with_mark_time_ranges
     assert parser.parse(end).time() == three_pm
 
 
-def test_parse_christmas(sutime_with_mark_time_ranges):
-    result = sutime_with_mark_time_ranges.parse('christmas eve')
+def test_parse_christmas(sutime_with_mark_time_ranges, input_christmas_eve):
+    result = sutime_with_mark_time_ranges.parse(input_christmas_eve)
 
     assert len(result) == 1
 
@@ -99,7 +117,15 @@ def test_parse_christmas(sutime_with_mark_time_ranges):
     assert result[0][u'value'] == u'XXXX-12-24'
 
 
-def test_sunday_night(sutime_with_mark_time_ranges):
-    result = sutime_with_mark_time_ranges.parse(
-        'Mary had spent Sunday night with us.')
+def test_sunday_night(sutime_with_mark_time_ranges, input_sunday_night):
+    result = sutime_with_mark_time_ranges.parse(input_sunday_night)
     assert len(result) == 1
+
+
+def test_reference_date(sutime, input_today, reference_date):
+    result = sutime.parse(input_today, reference_date.isoformat())
+
+    assert len(result) == 1
+
+    assert result[0][u'type'] == u'DATE'
+    assert result[0][u'value'] == reference_date.isoformat()

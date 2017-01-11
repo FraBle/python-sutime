@@ -37,8 +37,12 @@ public class SUTimeWrapper {
 
     public String annotate(String input) {
         String today = this.dateFormat.format(Calendar.getInstance().getTime());
+        return this.annotate(input, today);
+    }
+
+    public String annotate(String input, String referenceDate) {
         Annotation annotation = new Annotation(input);
-        annotation.set(CoreAnnotations.DocDateAnnotation.class, today);
+        annotation.set(CoreAnnotations.DocDateAnnotation.class, referenceDate);
 
         this.pipeline.annotate(annotation);
         List<CoreMap> timexAnnotations = annotation.get(TimeAnnotations.TimexAnnotations.class);
