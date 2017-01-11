@@ -74,7 +74,7 @@ SUTime(jars=[], jvm_started=False, mark_time_ranges=False, include_range=False)
         instead of marking 'January' and 'March' separately"
     """
 
-sutime.parse(input_str):
+sutime.parse(input_str, reference_date=''):
     """Parses datetime information out of string input.
 
     It invokes the SUTimeWrapper.annotate() function in Java.
