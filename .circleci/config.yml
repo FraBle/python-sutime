@@ -1,0 +1,49 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # This was the easiest way to get Python, the JRE and Maven in one image
+      - image: openkbs/jre-mvn-py3
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}-{{ checksum "pom.xml" }}
+
+      - run:
+          name: install dependencies
+          # We need to install venv as the image doesn't provide it
+          command: |
+            apt-get -q update
+            apt-get -qy install python3-venv
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+            mvn -q dependency:copy-dependencies -DoutputDirectory=./jars
+
+      - save_cache:
+          paths:
+            - ./venv
+            - ./jars
+          key: v1-dependencies-{{ checksum "requirements.txt" }}-{{ checksum "pom.xml" }}
+
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            python setup.py install
+            ./test.sh
+
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
