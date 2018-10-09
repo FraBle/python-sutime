@@ -59,7 +59,7 @@ Other examples can be found in the [test](https://github.com/FraBle/python-sutim
 
 #### Functions
 ```python
-SUTime(jars=[], jvm_started=False, mark_time_ranges=False, include_range=False)
+SUTime(jars=None, jvm_started=False, mark_time_ranges=False, include_range=False, jvm_flags=None)
     """
     jars: List of paths to the SUTime Java dependencies.
     jvm_started: Optional attribute to specify if the JVM has already been
@@ -72,6 +72,10 @@ SUTime(jars=[], jvm_started=False, mark_time_ranges=False, include_range=False)
         sutime.includeRange. Default is False.
         "Tells sutime to mark phrases such as 'From January to March'
         instead of marking 'January' and 'March' separately"
+    jvm_flags: Optional attribute to specify an iterable of string flags
+        to be provided to the JVM at startup. For example, this may be
+        used to specify the maximum heap size using '-Xmx'. Has no effect
+        if jvm_started is set to False. Default is an empty tuple.
     """
 
 sutime.parse(input_str, reference_date=''):
