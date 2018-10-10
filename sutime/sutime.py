@@ -27,7 +27,7 @@ class SUTime(object):
         jvm_flags: Optional attribute to specify an iterable of string flags
             to be provided to the JVM at startup. For example, this may be
             used to specify the maximum heap size using '-Xmx'. Has no effect
-            if jvm_started is set to False. Default is None.
+            if jvm_started is set to True. Default is None.
     """
 
     _required_jars = {

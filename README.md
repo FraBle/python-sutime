@@ -75,7 +75,7 @@ SUTime(jars=None, jvm_started=False, mark_time_ranges=False, include_range=False
     jvm_flags: Optional attribute to specify an iterable of string flags
         to be provided to the JVM at startup. For example, this may be
         used to specify the maximum heap size using '-Xmx'. Has no effect
-        if jvm_started is set to False. Default is an empty tuple.
+        if jvm_started is set to True. Default is None.
     """
 
 sutime.parse(input_str, reference_date=''):
