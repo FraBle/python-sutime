@@ -99,9 +99,6 @@ sutime.parse(input_str, reference_date=''):
     """
 ```
 
-#### Future Work
-- fixing all upcoming bug reports and issues.
-
 #### Credit
 - [The team behind Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/) for their awesome work and tools for the NLP community
 - [Luis Nell (Github: originell) and team](https://github.com/originell/jpype/) for maintaining JPype as interface between Python and Java
