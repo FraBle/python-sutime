@@ -51,6 +51,10 @@ jobs:
           command: xenon --max-absolute B --max-modules B --max-average A sutime 2>&1 | tee ./test-reports/complexity.txt
 
       - run:
+          name: Run security linter
+          command: bandit -r ./sutime/sutime.py
+
+      - run:
           name: Run tests
           command: ./test.sh
 
