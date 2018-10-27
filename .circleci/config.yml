@@ -34,6 +34,10 @@ jobs:
           key: v1-dependencies-{{ checksum "setup.py" }}-{{ checksum "pom.xml" }}
 
       - run:
+          name: Create test reports folder
+          command: mkdir test-reports
+
+      - run:
           name: Run formatter check
           command: black -l 79 --py36 --check sutime 2>&1 | tee ./test-reports/formatter.txt
 
