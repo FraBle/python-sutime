@@ -17,32 +17,25 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}-{{ checksum "pom.xml" }}
+          - v1-dependencies-{{ checksum "setup.py" }}-{{ checksum "pom.xml" }}
 
       - run:
           name: install dependencies
           # We need to install venv as the image doesn't provide it
           command: |
-            apt-get -q update
-            apt-get -qy install python3-venv
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install --upgrade pip
-            pip install -r requirements.txt
+            pip install --upgrade pip setuptools
+            python setup.py install
             mvn -q dependency:copy-dependencies -DoutputDirectory=./jars
 
       - save_cache:
           paths:
             - ./venv
             - ./jars
-          key: v1-dependencies-{{ checksum "requirements.txt" }}-{{ checksum "pom.xml" }}
+          key: v1-dependencies-{{ checksum "setup.py" }}-{{ checksum "pom.xml" }}
 
       - run:
           name: run tests
-          command: |
-            . venv/bin/activate
-            python setup.py install
-            ./test.sh
+          command: ./test.sh
 
       - store_artifacts:
           path: test-reports
