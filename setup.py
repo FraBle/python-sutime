@@ -51,13 +51,8 @@ setup(
     setup_requires=['pytest-runner'],
     tests_require=[
         'aniso8601',
-        'bandit',
-        'black',
-        'pylint',
         'pytest',
-        'pytest-cov',
-        'python-dateutil',
-        'xenon'
+        'python-dateutil'
     ],
     package_data={
         'sutime': [
