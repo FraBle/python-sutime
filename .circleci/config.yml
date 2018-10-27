@@ -23,7 +23,7 @@ jobs:
           name: Install dependencies
           # We need to install venv as the image doesn't provide it
           command: |
-            pip install --upgrade pip setuptools bandit black xenon pylint
+            pip install --upgrade pip setuptools bandit xenon pylint
             python setup.py install
             mvn -q dependency:copy-dependencies -DoutputDirectory=./jars
 
@@ -37,9 +37,10 @@ jobs:
           name: Create test reports folder
           command: mkdir test-reports
 
-      - run:
-          name: Run formatter check
-          command: black -l 79 --py36 --check sutime 2>&1 | tee ./test-reports/formatter.txt
+      # black requires Python >3.6
+      # - run:
+      #     name: Run formatter check
+      #     command: black -l 79 --py36 --check sutime 2>&1 | tee ./test-reports/formatter.txt
 
       - run:
           name: Run linter
