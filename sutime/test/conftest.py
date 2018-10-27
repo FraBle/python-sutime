@@ -28,6 +28,16 @@ def input_today():
     return "I have written a test today."
 
 
+@pytest.fixture
+def input_last_quarter():
+    return "Deals closed last quarter!"
+
+
+@pytest.fixture
+def last_quarter():
+    return "2016-Q4"
+
+
 @pytest.fixture(scope="module")
 def tomorrow():
     return date.today() + timedelta(days=1)

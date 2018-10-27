@@ -56,3 +56,14 @@ def test_reference_date(sutime, input_today, reference_date):
 
     assert result[0]["type"] == "DATE"
     assert result[0]["value"] == reference_date.isoformat()
+
+
+def test_last_quarter(
+    sutime, input_last_quarter, last_quarter, reference_date
+):
+    result = sutime.parse(input_last_quarter, reference_date.isoformat())
+
+    assert len(result) == 1
+
+    assert result[0]["type"] == "DATE"
+    assert result[0]["value"] == last_quarter

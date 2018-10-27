@@ -105,4 +105,4 @@ hs_err_pid*
 java/.idea/*
 java/dependency-reduced-pom.xml
 java/*.iml
-jars/
+jars/*

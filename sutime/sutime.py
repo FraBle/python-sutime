@@ -38,6 +38,8 @@ class SUTime(object):
         "slf4j-simple-1.7.25.jar",
     }
 
+    _sutime_python_jar = "stanford-corenlp-sutime-python-1.1.0.jar"
+
     def __init__(
         self,
         jars=None,
@@ -87,7 +89,7 @@ class SUTime(object):
             *[
                 imp.find_module("sutime")[1],
                 "jars",
-                "stanford-corenlp-sutime-python-1.0.0.jar",
+                SUTime._sutime_python_jar,
             ]
         )
         jars = [sutime_jar]

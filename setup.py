@@ -15,7 +15,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='sutime',
-    version='1.0.0rc1',
+    version='1.0.0rc2',
     description='A Python wrapper for Stanford CoreNLP\'s SUTime',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -57,7 +57,7 @@ setup(
     ],
     package_data={
         'sutime': [
-            'jars/stanford-corenlp-sutime-python-1.0.0.jar'
+            'jars/stanford-corenlp-sutime-python-1.1.0.jar'
         ],
     },
     package_dir={'sutime': 'sutime'},
