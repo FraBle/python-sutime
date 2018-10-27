@@ -46,7 +46,7 @@ setup(
     keywords='stanford corenlp sutime datetime parser parsing nlp',
     packages=['sutime'],
     install_requires=[
-        'JPype1'
+        'JPype1>=0.6.0'
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest', 'pytest-cov', 'python-dateutil', 'aniso8601'],
