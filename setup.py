@@ -15,7 +15,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='sutime',
-    version='0.2.0',
+    version='1.0.0rc1',
     description='A Python wrapper for Stanford CoreNLP\'s SUTime',
     long_description=long_description,
     long_description_content_type='text/markdown',
