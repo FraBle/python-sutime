@@ -24,6 +24,10 @@ class SUTime(object):
             sutime.includeRange. Default is False.
             "Tells sutime to mark phrases such as 'From January to March'
             instead of marking 'January' and 'March' separately"
+        jvm_flags: Optional attribute to specify an iterable of string flags
+            to be provided to the JVM at startup. For example, this may be
+            used to specify the maximum heap size using '-Xmx'. Has no effect
+            if jvm_started is set to True. Default is None.
     """
 
     _required_jars = {
@@ -33,18 +37,19 @@ class SUTime(object):
         'slf4j-simple-1.7.21.jar'
     }
 
-    def __init__(self, jars=[], jvm_started=False, mark_time_ranges=False, include_range=False):
+    def __init__(self, jars=None, jvm_started=False, mark_time_ranges=False, include_range=False,
+                 jvm_flags=None):
         """Initializes SUTime.
         """
         self.mark_time_ranges = mark_time_ranges
         self.include_range = include_range
-        self.jars = jars
+        self.jars = jars if jars is not None else []
         self._is_loaded = False
         self._lock = threading.Lock()
 
         if not jvm_started:
             self._classpath = self._create_classpath()
-            self._start_jvm()
+            self._start_jvm(jvm_flags)
 
         try:
             # make it thread-safe
@@ -61,12 +66,14 @@ class SUTime(object):
         finally:
             self._lock.release()
 
-    def _start_jvm(self):
+    def _start_jvm(self, additional_flags):
         if jpype.isJVMStarted() is not 1:
+            flags = ['-Djava.class.path=' + self._classpath,]
+            if additional_flags:
+                flags.extend(additional_flags)
             jpype.startJVM(
                 jpype.getDefaultJVMPath(),
-                '-Djava.class.path={classpath}'.format(
-                    classpath=self._classpath)
+                *flags
             )
 
     def _create_classpath(self):

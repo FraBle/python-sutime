@@ -1,8 +1,0 @@
-test:
-    override:
-        - py.test
-
-dependencies: 
-  pre:
-    - pip install pytest pytest-cov python-dateutil aniso8601
-    - mvn dependency:copy-dependencies -DoutputDirectory=./jars
