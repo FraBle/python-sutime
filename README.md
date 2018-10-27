@@ -3,7 +3,7 @@
 
 #### Build Status
 
-![CircleCI Build Status](https://circleci.com/gh/FraBle/python-sutime.svg?style=shield&circle-token=c5b5f420bcb888abc19312d711493cb9d1641503)
+[![CircleCI](https://circleci.com/gh/FraBle/python-sutime.svg?style=svg)](https://circleci.com/gh/FraBle/python-sutime)
 
 #### Introduction
 
