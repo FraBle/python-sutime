@@ -20,7 +20,7 @@ jobs:
           - v1-dependencies-{{ checksum "setup.py" }}-{{ checksum "pom.xml" }}
 
       - run:
-          name: install dependencies
+          name: Install dependencies
           # We need to install venv as the image doesn't provide it
           command: |
             pip install --upgrade pip setuptools
@@ -34,7 +34,19 @@ jobs:
           key: v1-dependencies-{{ checksum "setup.py" }}-{{ checksum "pom.xml" }}
 
       - run:
-          name: run tests
+          name: Run formatter check
+          command: black -l 79 --py36 --check sutime 2>&1 | tee ./test-reports/formatter.txt
+
+      - run:
+          name: Run linter
+          command: pylint --persistent=n --jobs=0 --reports=y sutime 2>&1 | tee ./test-reports/linter.txt
+
+      - run:
+          name: Run complexity check
+          command: xenon --max-absolute B --max-modules B --max-average A sutime 2>&1 | tee ./test-reports/complexity.txt
+
+      - run:
+          name: Run tests
           command: ./test.sh
 
       - store_artifacts:
