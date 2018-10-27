@@ -4,16 +4,23 @@ See:
 nlp.stanford.edu/software/sutime.shtml
 """
 
+from os import path
+
 from setuptools import setup
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 
 setup(
     name='sutime',
     version='0.2.0',
     description='A Python wrapper for Stanford CoreNLP\'s SUTime',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/FraBle/python-sutime',
     author='Frank Blechschmidt',
-    author_email='frank.blechschmidt@sap.com',
+    author_email='contact@frank-blechschmidt.com',
     license='GPLv3+',
     classifiers=[
         'Development Status :: 4 - Beta',
