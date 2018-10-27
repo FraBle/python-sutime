@@ -29,6 +29,9 @@ class SUTime(object):
             to be provided to the JVM at startup. For example, this may be
             used to specify the maximum heap size using '-Xmx'. Has no effect
             if jvm_started is set to True. Default is None.
+        language: Optional attribute to select language. The following options
+            are supported: english (/en), british, spanish (/es). Default is
+            english.
     """
 
     _required_jars = {
@@ -38,7 +41,9 @@ class SUTime(object):
         "slf4j-simple-1.7.25.jar",
     }
 
-    _sutime_python_jar = "stanford-corenlp-sutime-python-1.1.0.jar"
+    _sutime_python_jar = "stanford-corenlp-sutime-python-1.2.0.jar"
+
+    _supported_languages = {"english", "en", "british", "spanish", "es"}
 
     def __init__(
         self,
@@ -47,11 +52,15 @@ class SUTime(object):
         mark_time_ranges=False,
         include_range=False,
         jvm_flags=None,
+        language="english",
     ):
         """Initializes SUTime.
         """
-        self.mark_time_ranges = mark_time_ranges
-        self.include_range = include_range
+        if language not in SUTime._supported_languages:
+            raise RuntimeError(
+                "Unsupported language: {}".format(language)
+            )
+
         self.jars = jars if jars is not None else []
         self._is_loaded = False
         self._lock = threading.Lock()
@@ -71,7 +80,7 @@ class SUTime(object):
                 "edu.stanford.nlp.python.SUTimeWrapper"
             )
             self._sutime = SUTimeWrapper(
-                self.mark_time_ranges, self.include_range
+                mark_time_ranges, include_range, language
             )
             self._is_loaded = True
         finally:

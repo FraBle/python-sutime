@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.stanford.nlp</groupId>
     <artifactId>stanford-corenlp-sutime-python</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <name>CoreNLP SUTime Python Wrapper</name>
     <inceptionYear>2016</inceptionYear>
     <licenses>
@@ -29,9 +29,24 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>2.4.0-b180830.0438</version>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
@@ -43,6 +58,12 @@
             <artifactId>stanford-corenlp</artifactId>
             <version>3.9.2</version>
             <classifier>models</classifier>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>3.9.2</version>
+            <classifier>models-spanish</classifier>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

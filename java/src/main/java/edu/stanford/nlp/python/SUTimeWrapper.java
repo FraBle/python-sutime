@@ -23,11 +23,12 @@ public class SUTimeWrapper {
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private Gson gson;
 
-    public SUTimeWrapper(boolean markTimeRanges, boolean includeRange) {
+    public SUTimeWrapper(boolean markTimeRanges, boolean includeRange, String language) {
         this.properties = PropertiesUtils.asProperties(
                 "customAnnotatorClass.sutime", "edu.stanford.nlp.time.TimeAnnotator",
                 "sutime.markTimeRanges", markTimeRanges ? "true" : "false",
                 "sutime.includeRange", includeRange ? "true" : "false",
+                "sutime.language", language == null ? "english" : language,
                 "annotators", "tokenize, ssplit, pos, lemma, ner, sutime",
                 "ner.useSUTime", "true"
         );

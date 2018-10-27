@@ -29,6 +29,11 @@ def input_today():
 
 
 @pytest.fixture
+def input_spanish():
+    return "Hoy he escrito una prueba."
+
+
+@pytest.fixture
 def input_last_quarter():
     return "Deals closed last quarter!"
 

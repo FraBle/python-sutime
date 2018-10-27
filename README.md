@@ -79,6 +79,9 @@ SUTime(jars=None, jvm_started=False, mark_time_ranges=False, include_range=False
         to be provided to the JVM at startup. For example, this may be
         used to specify the maximum heap size using '-Xmx'. Has no effect
         if jvm_started is set to True. Default is None.
+    language: Optional attribute to select language. The following options
+        are supported: english (/en), british, spanish (/es). Default is
+        english.
     """
 
 sutime.parse(input_str, reference_date=''):
