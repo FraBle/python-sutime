@@ -1,9 +1,10 @@
-import os
 import imp
-import jpype
+import json
+import os
 import socket
 import threading
-import json
+
+import jpype
 
 socket.setdefaulttimeout(15)
 
@@ -91,7 +92,7 @@ class SUTime(object):
         )
         jars = [sutime_jar]
         jar_file_names = []
-        for top, dirs, files in os.walk(self.jars):
+        for top, _, files in os.walk(self.jars):
             for file_name in files:
                 if file_name.endswith(".jar"):
                     jars.append(os.path.join(top, file_name))
