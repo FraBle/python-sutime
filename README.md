@@ -1,9 +1,9 @@
 # sutime
 *Python wrapper for Stanford CoreNLP's [SUTime](http://nlp.stanford.edu/software/sutime.shtml) Java library*
-dc
+
 #### Build Status
 
-![CircleCi Build Status](https://circleci.com/gh/FraBle/python-sutime.svg?style=shield&circle-token=c5b5f420bcb888abc19312d711493cb9d1641503)
+![CircleCI Build Status](https://circleci.com/gh/FraBle/python-sutime.svg?style=shield&circle-token=c5b5f420bcb888abc19312d711493cb9d1641503)
 
 #### Introduction
 
@@ -19,6 +19,7 @@ This library provides a simple access to SUTime functions in Python.
 ```
 
 #### Example
+
 ```python
 import os
 import json
@@ -26,13 +27,15 @@ from sutime import SUTime
 
 if __name__ == '__main__':
     test_case = u'I need a desk for tomorrow from 2pm to 3pm'
-    
+
     jar_files = os.path.join(os.path.dirname(__file__), 'jars')
     sutime = SUTime(jars=jar_files, mark_time_ranges=True)
 
     print(json.dumps(sutime.parse(test_case), sort_keys=True, indent=4))
 ```
+
 Result:
+
 ```json
 [
     {
@@ -55,7 +58,7 @@ Result:
 ]
 ```
 
-Other examples can be found in the [test](https://github.com/FraBle/python-sutime/blob/master/sutime/test/test_sutime.py) directory.
+Other examples can be found in the [test](https://github.com/FraBle/python-sutime/blob/master/sutime/test) directory.
 
 #### Functions
 ```python
@@ -96,12 +99,13 @@ sutime.parse(input_str, reference_date=''):
     """
 ```
 
-#### Future Work
-- fixing all upcoming bug reports and issues.
-
 #### Credit
 - [The team behind Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/) for their awesome work and tools for the NLP community
 - [Luis Nell (Github: originell) and team](https://github.com/originell/jpype/) for maintaining JPype as interface between Python and Java
+
+#### Contributions
+- [René Springer](https://github.com/r-springer): Support for reference date
+- [Constantine Lignos](https://github.com/ConstantineLignos): Support for JVM flags, adoption of CircleCI 2.0, fix for mutable default argument, fix for test execution
 
 #### License
 - GPLv3+ (check the LICENSE file)
