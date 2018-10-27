@@ -49,7 +49,16 @@ setup(
         'JPype1>=0.6.0'
     ],
     setup_requires=['pytest-runner'],
-    tests_require=['pytest', 'pytest-cov', 'python-dateutil', 'aniso8601'],
+    tests_require=[
+        'aniso8601',
+        'bandit',
+        'black',
+        'pylint',
+        'pytest',
+        'pytest-cov',
+        'python-dateutil',
+        'xenon'
+    ],
     package_data={
         'sutime': [
             'jars/stanford-corenlp-sutime-python-1.0.0.jar'
