@@ -1,5 +1,0 @@
-pytest
-pytest-cov
-python-dateutil
-aniso8601
-JPype1
