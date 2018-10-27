@@ -41,7 +41,7 @@ setup(
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
         'Topic :: Scientific/Engineering :: Human Machine Interfaces',
         'Topic :: Software Development :: Libraries',
-        'Topic :: Text Processing :: Linguistic',
+        'Topic :: Text Processing :: Linguistic'
     ],
     keywords='stanford corenlp sutime datetime parser parsing nlp',
     packages=['sutime'],
