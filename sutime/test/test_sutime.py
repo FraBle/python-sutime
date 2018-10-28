@@ -5,7 +5,6 @@ from datetime import timedelta
 import aniso8601
 import pytest
 from dateutil import parser
-
 from sutime import SUTime
 
 
