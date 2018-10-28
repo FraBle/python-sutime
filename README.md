@@ -62,7 +62,7 @@ Other examples can be found in the [test](https://github.com/FraBle/python-sutim
 
 #### Functions
 ```python
-SUTime(jars=None, jvm_started=False, mark_time_ranges=False, include_range=False, jvm_flags=None)
+SUTime(jars=None, jvm_started=False, mark_time_ranges=False, include_range=False, jvm_flags=None, language='english')
     """
     jars: List of paths to the SUTime Java dependencies.
     jvm_started: Optional attribute to specify if the JVM has already been
