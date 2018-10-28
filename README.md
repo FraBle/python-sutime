@@ -3,9 +3,11 @@
 
 ## Build Status
 
-[![CircleCI (all branches)](https://img.shields.io/circleci/project/github/FraBle/python-sutime.svg)](https://circleci.com/gh/FraBle/python-sutime)
-[![PyPI](https://img.shields.io/pypi/v/sutime.svg)](https://pypi.org/project/sutime/)
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/sutime.svg)](https://pypi.org/project/sutime/)
+[![CircleCI](https://img.shields.io/circleci/project/github/FraBle/python-sutime.svg)](https://circleci.com/gh/FraBle/python-sutime)
+[![PyPI Version](https://img.shields.io/pypi/v/sutime.svg)](https://pypi.org/project/sutime/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/sutime.svg)](https://pypi.org/project/sutime/)
+[![Codacy Grade](https://img.shields.io/codacy/grade/05d69a800b2c4854bc1f98d9281b35a8.svg)](https://app.codacy.com/project/FraBle/python-sutime/dashboard)
+
 
 ## Introduction
 
