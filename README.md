@@ -1,17 +1,20 @@
 # sutime
-*Python wrapper for Stanford CoreNLP's [SUTime](http://nlp.stanford.edu/software/sutime.shtml) Java library*
+*Python wrapper for Stanford CoreNLP's [SUTime](http://nlp.stanford.edu/software/sutime.shtml) Java library.*
 
 ## Build Status
 
+#### CircleCI Builds
 [![CircleCI](https://img.shields.io/circleci/project/github/FraBle/python-sutime.svg)](https://circleci.com/gh/FraBle/python-sutime)
+
+#### PyPI
 [![PyPI Version](https://img.shields.io/pypi/v/sutime.svg)](https://pypi.org/project/sutime/)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/sutime.svg)](https://pypi.org/project/sutime/)
+
+#### Code Quality
 [![Codacy Grade](https://img.shields.io/codacy/grade/05d69a800b2c4854bc1f98d9281b35a8.svg)](https://app.codacy.com/project/FraBle/python-sutime/dashboard)
-
-
-## Introduction
-
-This library provides a simple access to SUTime functions in Python.
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/FraBle/python-sutime.svg)](https://scrutinizer-ci.com/g/FraBle/python-sutime/)
+[![Coverity Scan](https://img.shields.io/coverity/scan/17101.svg)](https://scan.coverity.com/projects/frable-python-sutime)
+[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/FraBle/python-sutime.svg)](https://codeclimate.com/github/FraBle/python-sutime/maintainability)
 
 ## Installation
 
@@ -64,6 +67,7 @@ Result:
 Other examples can be found in the [test](https://github.com/FraBle/python-sutime/blob/master/sutime/test) directory.
 
 ## Functions
+
 ```python
 SUTime(jars=None, jvm_started=False, mark_time_ranges=False, include_range=False, jvm_flags=None, language='english')
     """
@@ -103,12 +107,15 @@ sutime.parse(input_str, reference_date=''):
 ```
 
 ## Credit
+
 -   [The team behind Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/) for their awesome work and tools for the NLP community
 -   [Luis Nell (Github: originell) and team](https://github.com/originell/jpype/) for maintaining JPype as interface between Python and Java
 
 ## Contributions
+
 -   [René Springer](https://github.com/r-springer): Support for reference date
 -   [Constantine Lignos](https://github.com/ConstantineLignos): Support for JVM flags, adoption of CircleCI 2.0, fix for mutable default argument, fix for test execution
 
 ## License
+
 -   GPLv3+ (check the LICENSE file)
