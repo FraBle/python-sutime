@@ -11,7 +11,7 @@ def sutime_spanish():
         jars=os.path.join(
             *[os.path.dirname(__file__), os.pardir, os.pardir, "jars"]
         ),
-        language="spanish"
+        language="spanish",
     )
 
 

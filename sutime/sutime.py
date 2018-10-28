@@ -56,9 +56,7 @@ class SUTime(object):
         """Initializes SUTime.
         """
         if language not in SUTime._supported_languages:
-            raise RuntimeError(
-                "Unsupported language: {}".format(language)
-            )
+            raise RuntimeError("Unsupported language: {}".format(language))
 
         self.jars = jars if jars is not None else []
 
@@ -67,12 +65,8 @@ class SUTime(object):
 
         if not jpype.isThreadAttachedToJVM():
             jpype.attachThreadToJVM()
-        SUTimeWrapper = jpype.JClass(
-            "edu.stanford.nlp.python.SUTimeWrapper"
-        )
-        self._sutime = SUTimeWrapper(
-            mark_time_ranges, include_range, language
-        )
+        SUTimeWrapper = jpype.JClass("edu.stanford.nlp.python.SUTimeWrapper")
+        self._sutime = SUTimeWrapper(mark_time_ranges, include_range, language)
 
     def _start_jvm(self, additional_flags):
         flags = ["-Djava.class.path=" + self._create_classpath()]
@@ -82,11 +76,7 @@ class SUTime(object):
 
     def _create_classpath(self):
         sutime_jar = os.path.join(
-            *[
-                imp.find_module("sutime")[1],
-                "jars",
-                SUTime._sutime_python_jar,
-            ]
+            *[imp.find_module("sutime")[1], "jars", SUTime._sutime_python_jar]
         )
         jars = [sutime_jar]
         jar_file_names = []

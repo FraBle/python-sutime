@@ -68,7 +68,8 @@ def test_last_quarter(
 
     assert result[0]["type"] == "DATE"
     assert result[0]["value"] == str(
-        (reference_date - timedelta(weeks=2)).year)
+        (reference_date - timedelta(weeks=2)).year
+    )
     assert result[0]["timex-value"] == last_quarter
 
 
@@ -92,5 +93,7 @@ def test_multithreading(
     assert result[input_today][0]["value"] == reference_date.isoformat()
 
     assert result[input_sunday_night][0]["type"] == "TIME"
-    assert result[input_sunday_night][0]["value"] == sunday_night.isoformat() \
-        + 'TNI'
+    assert (
+        result[input_sunday_night][0]["value"]
+        == sunday_night.isoformat() + "TNI"
+    )
