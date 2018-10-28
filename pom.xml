@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.stanford.nlp</groupId>
     <artifactId>stanford-corenlp-sutime-python</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
     <name>CoreNLP SUTime Python Wrapper</name>
     <inceptionYear>2016</inceptionYear>
     <licenses>
