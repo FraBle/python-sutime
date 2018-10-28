@@ -2,7 +2,6 @@ import imp
 import json
 import os
 import socket
-import threading
 
 import jpype
 
@@ -62,36 +61,24 @@ class SUTime(object):
             )
 
         self.jars = jars if jars is not None else []
-        self._is_loaded = False
-        self._lock = threading.Lock()
 
-        if not jvm_started:
-            self._classpath = self._create_classpath()
+        if not jvm_started and not jpype.isJVMStarted():
             self._start_jvm(jvm_flags)
 
-        try:
-            # make it thread-safe
-            if threading.activeCount() > 1:
-                if jpype.isThreadAttachedToJVM() is not 1:
-                    jpype.attachThreadToJVM()
-            self._lock.acquire()
-
-            SUTimeWrapper = jpype.JClass(
-                "edu.stanford.nlp.python.SUTimeWrapper"
-            )
-            self._sutime = SUTimeWrapper(
-                mark_time_ranges, include_range, language
-            )
-            self._is_loaded = True
-        finally:
-            self._lock.release()
+        if not jpype.isThreadAttachedToJVM():
+            jpype.attachThreadToJVM()
+        SUTimeWrapper = jpype.JClass(
+            "edu.stanford.nlp.python.SUTimeWrapper"
+        )
+        self._sutime = SUTimeWrapper(
+            mark_time_ranges, include_range, language
+        )
 
     def _start_jvm(self, additional_flags):
-        if jpype.isJVMStarted() is not 1:
-            flags = ["-Djava.class.path=" + self._classpath]
-            if additional_flags:
-                flags.extend(additional_flags)
-            jpype.startJVM(jpype.getDefaultJVMPath(), *flags)
+        flags = ["-Djava.class.path=" + self._create_classpath()]
+        if additional_flags:
+            flags.extend(additional_flags)
+        jpype.startJVM(jpype.getDefaultJVMPath(), *flags)
 
     def _create_classpath(self):
         sutime_jar = os.path.join(
@@ -126,13 +113,9 @@ class SUTime(object):
         Returns:
             A list of dicts with the result from the SUTimeWrapper.annotate()
                 call.
-
-        Raises:
-            RuntimeError: An error occurres when CoreNLP is not loaded.
         """
-        if self._is_loaded is False:
-            raise RuntimeError("Please load SUTime first!")
-
+        if not jpype.isThreadAttachedToJVM():
+            jpype.attachThreadToJVM()
         if reference_date:
             return json.loads(self._sutime.annotate(input_str, reference_date))
         return json.loads(self._sutime.annotate(input_str))

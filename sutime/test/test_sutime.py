@@ -1,4 +1,5 @@
 import os
+from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
 import aniso8601
@@ -69,3 +70,27 @@ def test_last_quarter(
     assert result[0]["value"] == str(
         (reference_date - timedelta(weeks=2)).year)
     assert result[0]["timex-value"] == last_quarter
+
+
+def test_multithreading(
+    sutime, input_today, input_sunday_night, reference_date, sunday_night
+):
+    def fn(sentence, sutime, reference_date):
+        return sentence, sutime.parse(sentence, reference_date.isoformat())
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        result = dict(
+            future.result()
+            for future in [
+                executor.submit(fn, sentence, sutime, reference_date)
+                for sentence in [input_today, input_sunday_night]
+            ]
+        )
+    assert len(result) == 2
+
+    assert result[input_today][0]["type"] == "DATE"
+    assert result[input_today][0]["value"] == reference_date.isoformat()
+
+    assert result[input_sunday_night][0]["type"] == "TIME"
+    assert result[input_sunday_night][0]["value"] == sunday_night.isoformat() \
+        + 'TNI'

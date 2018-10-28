@@ -96,9 +96,6 @@ sutime.parse(input_str, reference_date=''):
     Returns:
         A list of dicts with the result from the SUTimeWrapper.annotate()
             call.
-
-    Raises:
-        RuntimeError: An error occurres when CoreNLP is not loaded.
     """
 ```
 

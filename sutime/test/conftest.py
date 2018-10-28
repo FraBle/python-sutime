@@ -61,3 +61,8 @@ def three_pm():
 @pytest.fixture(scope="module")
 def reference_date():
     return date(2017, 1, 9)
+
+
+@pytest.fixture(scope="module")
+def sunday_night(reference_date):
+    return reference_date + timedelta(days=6)
