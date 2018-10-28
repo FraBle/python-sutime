@@ -101,12 +101,12 @@ sutime.parse(input_str, reference_date=''):
 ```
 
 ## Credit
--  [The team behind Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/) for their awesome work and tools for the NLP community
--  [Luis Nell (Github: originell) and team](https://github.com/originell/jpype/) for maintaining JPype as interface between Python and Java
+-   [The team behind Stanford CoreNLP](http://stanfordnlp.github.io/CoreNLP/) for their awesome work and tools for the NLP community
+-   [Luis Nell (Github: originell) and team](https://github.com/originell/jpype/) for maintaining JPype as interface between Python and Java
 
 ## Contributions
--  [René Springer](https://github.com/r-springer): Support for reference date
--  [Constantine Lignos](https://github.com/ConstantineLignos): Support for JVM flags, adoption of CircleCI 2.0, fix for mutable default argument, fix for test execution
+-   [René Springer](https://github.com/r-springer): Support for reference date
+-   [Constantine Lignos](https://github.com/ConstantineLignos): Support for JVM flags, adoption of CircleCI 2.0, fix for mutable default argument, fix for test execution
 
 ## License
--  GPLv3+ (check the LICENSE file)
+-   GPLv3+ (check the LICENSE file)
