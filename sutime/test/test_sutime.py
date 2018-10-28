@@ -66,4 +66,6 @@ def test_last_quarter(
     assert len(result) == 1
 
     assert result[0]["type"] == "DATE"
-    assert result[0]["value"] == last_quarter
+    assert result[0]["value"] == str(
+        (reference_date - timedelta(weeks=2)).year)
+    assert result[0]["timex-value"] == last_quarter

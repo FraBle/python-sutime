@@ -41,7 +41,7 @@ class SUTime(object):
         "slf4j-simple-1.7.25.jar",
     }
 
-    _sutime_python_jar = "stanford-corenlp-sutime-python-1.2.0.jar"
+    _sutime_python_jar = "stanford-corenlp-sutime-python-1.3.0.jar"
 
     _supported_languages = {"english", "en", "british", "spanish", "es"}
 

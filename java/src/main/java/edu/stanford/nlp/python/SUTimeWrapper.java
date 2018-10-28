@@ -74,11 +74,15 @@ public class SUTimeWrapper {
                 valueMap.put("end", range.end().toISOString());
                 resultEntry.put("value", valueMap);
             } else{
-                String timexValue = coreMap.get(TimeExpression.Annotation.class).getTemporal().getTimexValue();
-                if (timexValue != null)
-                    resultEntry.put("value", timexValue);
+                String isoString = coreMap.get(TimeExpression.Annotation.class).getTemporal().toISOString();
+                if (isoString != null)
+                    resultEntry.put("value", isoString);
                 else
                     resultEntry.put("value", coreMap.get(TimeExpression.Annotation.class).getTemporal().toString());
+
+                String timexValue = coreMap.get(TimeExpression.Annotation.class).getTemporal().getTimexValue();
+                if (timexValue != null)
+                    resultEntry.put("timex-value", timexValue);
             }
 
             result.add(resultEntry);
