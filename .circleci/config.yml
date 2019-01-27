@@ -37,11 +37,6 @@ jobs:
           name: Create test reports folder
           command: mkdir test-reports
 
-      # black requires Python >3.6
-      # - run:
-      #     name: Run formatter check
-      #     command: black -l 79 --py36 --check sutime 2>&1 | tee ./test-reports/formatter.txt
-
       - run:
           name: Run linter
           command: pylint sutime 2>&1 | tee ./test-reports/linter.txt
@@ -52,7 +47,7 @@ jobs:
 
       - run:
           name: Run security linter
-          command: bandit -r ./sutime/sutime.py
+          command: bandit -r ./sutime/sutime.py 2>&1 | tee ./test-reports/bandit.txt
 
       - run:
           name: Run tests
