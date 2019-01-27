@@ -21,11 +21,10 @@ jobs:
 
       - run:
           name: Install dependencies
-          # We need to install venv as the image doesn't provide it
           command: |
             pip install --upgrade pip setuptools bandit xenon pylint
-            python setup.py install
-            mvn -q dependency:copy-dependencies -DoutputDirectory=./jars -p spanish
+            python3 setup.py install
+            mvn dependency:copy-dependencies -DoutputDirectory=./jars -P spanish
 
       - save_cache:
           paths:
