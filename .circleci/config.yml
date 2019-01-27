@@ -25,7 +25,7 @@ jobs:
           command: |
             pip install --upgrade pip setuptools bandit xenon pylint
             python setup.py install
-            mvn -q dependency:copy-dependencies -DoutputDirectory=./jars
+            mvn -q dependency:copy-dependencies -DoutputDirectory=./jars -p spanish
 
       - save_cache:
           paths:

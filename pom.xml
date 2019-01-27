@@ -26,6 +26,7 @@
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <corenlp.version>3.9.2</corenlp.version>
     </properties>
     <dependencies>
         <dependency>
@@ -51,19 +52,13 @@
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>3.9.2</version>
+            <version>${corenlp.version}</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>3.9.2</version>
+            <version>${corenlp.version}</version>
             <classifier>models</classifier>
-        </dependency>
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>3.9.2</version>
-            <classifier>models-spanish</classifier>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -77,6 +72,74 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>arabic</id>
+            <dependencies>
+                <dependency>
+                    <groupId>edu.stanford.nlp</groupId>
+                    <artifactId>stanford-corenlp</artifactId>
+                    <version>${corenlp.version}</version>
+                    <classifier>models-arabic</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>chinese</id>
+            <dependencies>
+                <dependency>
+                    <groupId>edu.stanford.nlp</groupId>
+                    <artifactId>stanford-corenlp</artifactId>
+                    <version>${corenlp.version}</version>
+                    <classifier>models-chinese</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>english</id>
+            <dependencies>
+                <dependency>
+                    <groupId>edu.stanford.nlp</groupId>
+                    <artifactId>stanford-corenlp</artifactId>
+                    <version>${corenlp.version}</version>
+                    <classifier>models-english</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>french</id>
+            <dependencies>
+                <dependency>
+                    <groupId>edu.stanford.nlp</groupId>
+                    <artifactId>stanford-corenlp</artifactId>
+                    <version>${corenlp.version}</version>
+                    <classifier>models-french</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>german</id>
+            <dependencies>
+                <dependency>
+                    <groupId>edu.stanford.nlp</groupId>
+                    <artifactId>stanford-corenlp</artifactId>
+                    <version>${corenlp.version}</version>
+                    <classifier>models-german</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>spanish</id>
+            <dependencies>
+                <dependency>
+                    <groupId>edu.stanford.nlp</groupId>
+                    <artifactId>stanford-corenlp</artifactId>
+                    <version>${corenlp.version}</version>
+                    <classifier>models-spanish</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
     <build>
         <pluginManagement>
             <plugins>
