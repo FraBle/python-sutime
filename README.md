@@ -36,7 +36,7 @@ The following command can be used to download the language models for `arabic`, 
 ```bash
 >> mvn dependency:copy-dependencies -DoutputDirectory=./jars -P <language>
 ```
-_However, SUTime only supports a subset (default model and `spanish`) of CoreNLP's languages and the other language models will get ignored._
+*However, SUTime only supports a subset (default model and `spanish`) of CoreNLP's languages and the other language models will get ignored.*
 
 ## Example
 
