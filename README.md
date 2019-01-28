@@ -24,11 +24,25 @@
 >> mvn dependency:copy-dependencies -DoutputDirectory=./jars
 ```
 
+Run the following command to add the Spanish language model:
+```bash
+>> mvn dependency:copy-dependencies -DoutputDirectory=./jars -P spanish
+```
+
+## Supported Languages
+SUTime currently supports only English, British and Spanish ([Source](https://github.com/stanfordnlp/CoreNLP/tree/master/src/edu/stanford/nlp/time/rules)).
+This Python wrapper is prepared to support the other CoreNLP languages (e.g. German) as well as soon as they get added to SUTime.
+The following command can be used to download the language models for `arabic`, `chinese`, `english`, `french`, `german`, and `spanish`:
+```bash
+>> mvn dependency:copy-dependencies -DoutputDirectory=./jars -P <language>
+```
+*However, SUTime only supports a subset (default model and `spanish`) of CoreNLP's languages and the other language models will get ignored.*
+
 ## Example
 
 ```python
-import os
 import json
+import os
 from sutime import SUTime
 
 if __name__ == '__main__':
@@ -69,7 +83,8 @@ Other examples can be found in the [test](https://github.com/FraBle/python-sutim
 ## Functions
 
 ```python
-SUTime(jars=None, jvm_started=False, mark_time_ranges=False, include_range=False, jvm_flags=None, language='english')
+SUTime(jars=None, jvm_started=False, mark_time_ranges=False, include_range=False,
+       jvm_flags=None, language='english')
     """
     jars: List of paths to the SUTime Java dependencies.
     jvm_started: Optional attribute to specify if the JVM has already been

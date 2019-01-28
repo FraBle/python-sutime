@@ -1,5 +1,7 @@
+import glob
 import imp
 import json
+import logging
 import os
 import socket
 
@@ -9,7 +11,6 @@ socket.setdefaulttimeout(15)
 
 
 class SUTime(object):
-
     """Python wrapper for SUTime (CoreNLP) by Stanford.
 
     Attributes:
@@ -42,7 +43,25 @@ class SUTime(object):
 
     _sutime_python_jar = "stanford-corenlp-sutime-python-1.3.0.jar"
 
-    _supported_languages = {"english", "en", "british", "spanish", "es"}
+    # full name or ISO 639-1 code
+    _languages = {
+        "arabic": "arabic",
+        "ar": "arabic",
+        "chinese": "chinese",
+        "zh": "chinese",
+        "english": "english",
+        "british": "british",
+        "en": "english",
+        "french": "french",
+        "fr": "french",
+        "german": "german",
+        "de": "german",
+        "spanish": "spanish",
+        "es": "spanish",
+    }
+
+    # https://github.com/stanfordnlp/CoreNLP/tree/master/src/edu/stanford/nlp/time/rules
+    _supported_languages = {"british", "english", "spanish"}
 
     def __init__(
         self,
@@ -55,18 +74,48 @@ class SUTime(object):
     ):
         """Initializes SUTime.
         """
-        if language not in SUTime._supported_languages:
-            raise RuntimeError("Unsupported language: {}".format(language))
-
         self.jars = jars if jars is not None else []
+        self._check_language_model_dependency(language.lower())
 
         if not jvm_started and not jpype.isJVMStarted():
             self._start_jvm(jvm_flags)
 
         if not jpype.isThreadAttachedToJVM():
             jpype.attachThreadToJVM()
-        SUTimeWrapper = jpype.JClass("edu.stanford.nlp.python.SUTimeWrapper")
-        self._sutime = SUTimeWrapper(mark_time_ranges, include_range, language)
+        wrapper = jpype.JClass("edu.stanford.nlp.python.SUTimeWrapper")
+        self._sutime = wrapper(mark_time_ranges, include_range, language)
+
+    def _check_language_model_dependency(self, language):
+        if language not in SUTime._languages:
+            raise RuntimeError("Unsupported language: {}".format(language))
+        normalized_language = SUTime._languages[language]
+
+        if normalized_language not in SUTime._supported_languages:
+            logging.warning(
+                "%s is not (yet) supported by SUTime. "
+                "Falling back to default model.",
+                normalized_language.capitalize(),
+            )
+            return
+
+        language_model_file = os.path.join(
+            self.jars,
+            "stanford-corenlp-3.9.2-models-{}.jar".format(normalized_language),
+        )
+
+        if not (
+            glob.glob(language_model_file)
+            or normalized_language in {"english", "british"}
+        ):
+            raise RuntimeError(
+                "Missing language model for {}! ".format(
+                    SUTime._languages[language].capitalize()
+                )
+                + "Please run: mvn dependency:copy-dependencies "
+                + "-DoutputDirectory=./jars -P {}".format(
+                    SUTime._languages[language]
+                )
+            )
 
     def _start_jvm(self, additional_flags):
         flags = ["-Djava.class.path=" + self._create_classpath()]

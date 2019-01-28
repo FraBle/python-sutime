@@ -8,16 +8,16 @@ from io import open
 from os import path
 
 from setuptools import setup
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+THIS_DIRECTORY = path.abspath(path.dirname(__file__))
+with open(path.join(THIS_DIRECTORY, 'README.md'), encoding='utf-8') as f:
+    LONG_DESCRIPTION = f.read()
 
 
 setup(
     name='sutime',
-    version='1.0.0rc4',
+    version='1.0.0rc5',
     description='A Python wrapper for Stanford CoreNLP\'s SUTime',
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
     url='https://github.com/FraBle/python-sutime',
     author='Frank Blechschmidt',
