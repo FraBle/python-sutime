@@ -6,9 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      # This was the easiest way to get Python, the JRE and Maven in one image
-      - image: openkbs/jre-mvn-py3
-
+      - image: frable/openjdk11-python3.7-slim-stretch
     working_directory: ~/repo
 
     steps:
@@ -17,7 +15,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "setup.py" }}-{{ checksum "pom.xml" }}
+          - dependencies-{{ checksum "setup.py" }}-{{ checksum "pom.xml" }}
 
       - run:
           name: Install dependencies
@@ -28,9 +26,9 @@ jobs:
 
       - save_cache:
           paths:
-            - ./venv
             - ./jars
-          key: v1-dependencies-{{ checksum "setup.py" }}-{{ checksum "pom.xml" }}
+            - ~/.cache/pip
+          key: dependencies-{{ checksum "setup.py" }}-{{ checksum "pom.xml" }}
 
       - run:
           name: Create test reports folder
