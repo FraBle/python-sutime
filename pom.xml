@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.stanford.nlp</groupId>
     <artifactId>stanford-corenlp-sutime-python</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
     <name>CoreNLP SUTime Python Wrapper</name>
     <inceptionYear>2016</inceptionYear>
     <licenses>
@@ -23,7 +23,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>11</java.version>
+        <java.version>1.6</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <corenlp.version>3.9.2</corenlp.version>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
+            <version>2.4.0-b180830.0359</version>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-            <version>2.3.1</version>
+            <version>2.4.0-b180830.0438</version>
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>
@@ -151,7 +151,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>2.5.2</version>
+                    <version>3.0.0-M1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -161,7 +161,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.1.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
