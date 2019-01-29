@@ -57,7 +57,7 @@ setup(
     ],
     package_data={
         'sutime': [
-            'jars/stanford-corenlp-sutime-python-1.3.0.jar'
+            'jars/stanford-corenlp-sutime-python-1.4.0.jar'
         ],
     },
     package_dir={'sutime': 'sutime'},
