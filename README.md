@@ -19,6 +19,7 @@
 ## Installation
 
 ```bash
+>> pip install setuptools_scm jpype1 # install pre-reqs
 >> pip install sutime
 >> # use package pom.xml to install all Java dependencies via Maven into ./jars
 >> mvn dependency:copy-dependencies -DoutputDirectory=./jars
