@@ -1,16 +1,15 @@
-import glob
-import imp
-import json
-import logging
 import os
-import socket
-
+import imp
 import jpype
+import socket
+import threading
+import json
 
 socket.setdefaulttimeout(15)
 
 
 class SUTime(object):
+
     """Python wrapper for SUTime (CoreNLP) by Stanford.
 
     Attributes:
@@ -25,122 +24,74 @@ class SUTime(object):
             sutime.includeRange. Default is False.
             "Tells sutime to mark phrases such as 'From January to March'
             instead of marking 'January' and 'March' separately"
-        jvm_flags: Optional attribute to specify an iterable of string flags
-            to be provided to the JVM at startup. For example, this may be
-            used to specify the maximum heap size using '-Xmx'. Has no effect
-            if jvm_started is set to True. Default is None.
-        language: Optional attribute to select language. The following options
-            are supported: english (/en), british, spanish (/es). Default is
-            english.
     """
 
     _required_jars = {
-        "stanford-corenlp-3.9.2-models.jar",
-        "stanford-corenlp-3.9.2.jar",
-        "gson-2.8.5.jar",
-        "slf4j-simple-1.7.25.jar",
+        'stanford-corenlp-3.9.2-models.jar',
+        'stanford-corenlp-3.9.2.jar',
+        'gson-2.8.5.jar',
+        'slf4j-simple-1.7.25.jar'
     }
 
-    _sutime_python_jar = "stanford-corenlp-sutime-python-1.4.0.jar"
-
-    # full name or ISO 639-1 code
-    _languages = {
-        "arabic": "arabic",
-        "ar": "arabic",
-        "chinese": "chinese",
-        "zh": "chinese",
-        "english": "english",
-        "british": "british",
-        "en": "english",
-        "french": "french",
-        "fr": "french",
-        "german": "german",
-        "de": "german",
-        "spanish": "spanish",
-        "es": "spanish",
-    }
-
-    # https://github.com/stanfordnlp/CoreNLP/tree/master/src/edu/stanford/nlp/time/rules
-    _supported_languages = {"british", "english", "spanish"}
-
-    def __init__(
-        self,
-        jars=None,
-        jvm_started=False,
-        mark_time_ranges=False,
-        include_range=False,
-        jvm_flags=None,
-        language="english",
-    ):
+    def __init__(self, jvm_started=False, mark_time_ranges=False, include_range=False,jars=None):
         """Initializes SUTime.
         """
-        self.jars = jars if jars is not None else []
-        self._check_language_model_dependency(language.lower())
+        self.mark_time_ranges = mark_time_ranges
+        self.include_range = include_range
+        self._is_loaded = False
+        self._lock = threading.Lock()
+        
+        if not jars:
+            jars_files = os.path.join(os.path.dirname(__file__), 'jars')
+            self.jars = jars_files
 
-        if not jvm_started and not jpype.isJVMStarted():
-            self._start_jvm(jvm_flags)
+        if not jvm_started:
+            self._classpath = self._create_classpath()
+            self._start_jvm()
 
-        if not jpype.isThreadAttachedToJVM():
-            jpype.attachThreadToJVM()
-        wrapper = jpype.JClass("edu.stanford.nlp.python.SUTimeWrapper")
-        self._sutime = wrapper(mark_time_ranges, include_range, language)
+        try:
+            # make it thread-safe
+            if threading.activeCount() > 1:
+                if jpype.isThreadAttachedToJVM() is not 1:
+                    jpype.attachThreadToJVM()
+            self._lock.acquire()
 
-    def _check_language_model_dependency(self, language):
-        if language not in SUTime._languages:
-            raise RuntimeError("Unsupported language: {}".format(language))
-        normalized_language = SUTime._languages[language]
+            SUTimeWrapper = jpype.JClass(
+                'edu.stanford.nlp.python.SUTimeWrapper')
+            self._sutime = SUTimeWrapper(
+                self.mark_time_ranges, self.include_range)
+            self._is_loaded = True
+        finally:
+            self._lock.release()
 
-        if normalized_language not in SUTime._supported_languages:
-            logging.warning(
-                "%s is not (yet) supported by SUTime. "
-                "Falling back to default model.",
-                normalized_language.capitalize(),
+    def _start_jvm(self):
+        if jpype.isJVMStarted() is not 1:
+            jpype.startJVM(
+                jpype.getDefaultJVMPath(),
+                '-Djava.class.path={classpath}'.format(
+                    classpath=self._classpath)
             )
-            return
-
-        language_model_file = os.path.join(
-            self.jars,
-            "stanford-corenlp-3.9.2-models-{}.jar".format(normalized_language),
-        )
-
-        if not (
-            glob.glob(language_model_file)
-            or normalized_language in {"english", "british"}
-        ):
-            raise RuntimeError(
-                "Missing language model for {}! ".format(
-                    SUTime._languages[language].capitalize()
-                )
-                + "Please run: mvn dependency:copy-dependencies "
-                + "-DoutputDirectory=./jars -P {}".format(
-                    SUTime._languages[language]
-                )
-            )
-
-    def _start_jvm(self, additional_flags):
-        flags = ["-Djava.class.path=" + self._create_classpath()]
-        if additional_flags:
-            flags.extend(additional_flags)
-        jpype.startJVM(jpype.getDefaultJVMPath(), *flags)
 
     def _create_classpath(self):
-        sutime_jar = os.path.join(
-            *[imp.find_module("sutime")[1], "jars", SUTime._sutime_python_jar]
-        )
+        sutime_jar = os.path.join(*[
+            imp.find_module('sutime')[1],
+            'jars',
+            'stanford-corenlp-sutime-python-1.0.0.jar'
+        ])
         jars = [sutime_jar]
         jar_file_names = []
-        for top, _, files in os.walk(self.jars):
+        for top, dirs, files in os.walk(self.jars):
             for file_name in files:
-                if file_name.endswith(".jar"):
+                if file_name.endswith('.jar'):
                     jars.append(os.path.join(top, file_name))
                     jar_file_names.append(file_name)
         if not SUTime._required_jars.issubset(jar_file_names):
+            print([j for j in SUTime._required_jars if not j in jar_file_names])
             raise RuntimeError(
-                "Not all necessary Java dependencies have been downloaded!"
-            )
+                'Not all necessary Java dependencies have been downloaded!')
         return os.pathsep.join(jars)
 
-    def parse(self, input_str, reference_date=""):
+    def parse(self, input_str, reference_date=''):
         """Parses datetime information out of string input.
 
         It invokes the SUTimeWrapper.annotate() function in Java.
@@ -152,9 +103,13 @@ class SUTime(object):
         Returns:
             A list of dicts with the result from the SUTimeWrapper.annotate()
                 call.
+
+        Raises:
+            RuntimeError: An error occurres when CoreNLP is not loaded.
         """
-        if not jpype.isThreadAttachedToJVM():
-            jpype.attachThreadToJVM()
+        if self._is_loaded is False:
+            raise RuntimeError('Please load SUTime first!')
+
         if reference_date:
             return json.loads(self._sutime.annotate(input_str, reference_date))
         return json.loads(self._sutime.annotate(input_str))
