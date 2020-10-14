@@ -9,7 +9,6 @@ import jpype
 
 socket.setdefaulttimeout(15)
 
-
 class SUTime(object):
     """Python wrapper for SUTime (CoreNLP) by Stanford.
 
@@ -156,5 +155,5 @@ class SUTime(object):
         if not jpype.isThreadAttachedToJVM():
             jpype.attachThreadToJVM()
         if reference_date:
-            return json.loads(str(self._sutime.annotate(input_str, reference_date)))
+            return json.loads(str(self._sutime.annotate(input_str,reference_date)))
         return json.loads(str(self._sutime.annotate(input_str)))
