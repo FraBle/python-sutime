@@ -7,7 +7,6 @@ import json
 
 socket.setdefaulttimeout(15)
 
-
 class SUTime(object):
 
     """Python wrapper for SUTime (CoreNLP) by Stanford.
@@ -111,5 +110,5 @@ class SUTime(object):
             raise RuntimeError('Please load SUTime first!')
 
         if reference_date:
-            return json.loads(self._sutime.annotate(input_str, reference_date))
-        return json.loads(self._sutime.annotate(input_str))
+            return json.loads(str(self._sutime.annotate(input_str, reference_date)))
+        return json.loads(str(self._sutime.annotate(input_str)))
