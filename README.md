@@ -130,6 +130,8 @@ sutime.parse(input_str, reference_date=''):
 
 -   [René Springer](https://github.com/r-springer): Support for reference date
 -   [Constantine Lignos](https://github.com/ConstantineLignos): Support for JVM flags, adoption of CircleCI 2.0, fix for mutable default argument, fix for test execution
+-   [Cole Robertson](https://github.com/cbjrobertson): Updated instructions, JAR requirements, and SUTime JAR imports
+-   [Ludovico Pestarino](https://github.com/arkeane): Modified json.loads for compatibility with json data (string handling)
 
 ## License
 
