@@ -10,11 +10,7 @@ from sutime import SUTime
 
 @pytest.fixture(scope="module")
 def sutime():
-    return SUTime(
-        jars=os.path.join(
-            *[os.path.dirname(__file__), os.pardir, os.pardir, "jars"]
-        )
-    )
+    return SUTime()
 
 
 def test_parse_duration(sutime, input_duration, tomorrow, two_pm):

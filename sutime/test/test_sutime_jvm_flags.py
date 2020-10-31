@@ -7,9 +7,6 @@ from sutime import SUTime
 @pytest.fixture(scope="module")
 def sutime_with_jvm_flags():
     return SUTime(
-        jars=os.path.join(
-            *[os.path.dirname(__file__), os.pardir, os.pardir, "jars"]
-        ),
         jvm_flags=("-Xms256m",),
     )
 

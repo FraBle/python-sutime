@@ -8,9 +8,6 @@ from sutime import SUTime
 @pytest.fixture(scope="module")
 def sutime_with_mark_time_ranges():
     return SUTime(
-        jars=os.path.join(
-            *[os.path.dirname(__file__), os.pardir, os.pardir, "jars"]
-        ),
         mark_time_ranges=True,
     )
 

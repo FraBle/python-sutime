@@ -7,9 +7,6 @@ from sutime import SUTime
 @pytest.fixture(scope="module")
 def sutime_spanish():
     return SUTime(
-        jars=os.path.join(
-            *[os.path.dirname(__file__), os.pardir, os.pardir, "jars"]
-        ),
         language="spanish",
     )
 

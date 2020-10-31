@@ -1,0 +1,13 @@
+language: python
+dist: focal
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+install:
+  - python setup.py -q install
+  - mvn dependency:copy-dependencies -DoutputDirectory=./sutime/jars -P spanish
+script:
+  - python3 setup.py test

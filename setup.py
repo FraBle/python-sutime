@@ -15,7 +15,7 @@ with open(path.join(THIS_DIRECTORY, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='sutime',
-    version='1.0.0rc5',
+    version='1.0.0',
     description='A Python wrapper for Stanford CoreNLP\'s SUTime',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
@@ -27,18 +27,12 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.0',
-        'Programming Language :: Python :: 3.1',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
         'Topic :: Scientific/Engineering :: Human Machine Interfaces',
         'Topic :: Software Development :: Libraries',
@@ -47,13 +41,13 @@ setup(
     keywords='stanford corenlp sutime datetime parser parsing nlp',
     packages=['sutime'],
     install_requires=[
-        'JPype1>=0.6.0'
+        'JPype1>=1.1.2'
     ],
     setup_requires=['pytest-runner'],
     tests_require=[
-        'aniso8601',
-        'pytest',
-        'python-dateutil'
+        'aniso8601>=8.0.0',
+        'pytest>=6.1.2',
+        'python-dateutil>=2.8.1'
     ],
     package_data={
         'sutime': [
