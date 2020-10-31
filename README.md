@@ -21,12 +21,13 @@
 ```bash
 >> pip install setuptools_scm jpype1 # install pre-reqs
 >> pip install sutime
->> # use package pom.xml to install all Java dependencies via Maven into ./jars
+>> #first cd into python-sutime/sutime, then use package pom.xml to install all Java dependencies via Maven into ./jars
 >> mvn dependency:copy-dependencies -DoutputDirectory=./jars
 ```
 
 Run the following command to add the Spanish language model:
 ```bash
+>> #again from python-sutime/sutime, run:
 >> mvn dependency:copy-dependencies -DoutputDirectory=./jars -P spanish
 ```
 
@@ -43,14 +44,12 @@ The following command can be used to download the language models for `arabic`, 
 
 ```python
 import json
-import os
 from sutime import SUTime
 
 if __name__ == '__main__':
     test_case = u'I need a desk for tomorrow from 2pm to 3pm'
 
-    jar_files = os.path.join(os.path.dirname(__file__), 'jars')
-    sutime = SUTime(jars=jar_files, mark_time_ranges=True)
+    sutime = SUTime(mark_time_ranges=True,include_range=True)
 
     print(json.dumps(sutime.parse(test_case), sort_keys=True, indent=4))
 ```
