@@ -3,9 +3,9 @@
 
 ## Build Status
 
-#### CircleCI Builds
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5b9cb504d8b040b38f86157ad75ecd96)](https://app.codacy.com/gh/FraBle/python-sutime?utm_source=github.com&utm_medium=referral&utm_content=FraBle/python-sutime&utm_campaign=Badge_Grade)
-[![CircleCI](https://img.shields.io/circleci/project/github/FraBle/python-sutime.svg)](https://circleci.com/gh/FraBle/python-sutime)
+#### Travis CI Builds
+[![Travis CI](https://travis-ci.com/FraBle/python-sutime.svg?branch=master)](https://travis-ci.com/FraBle/python-sutime)
+>>>>>>> c66aec1... Switch to Poetry and wemake-python-styleguide
 
 #### PyPI
 [![PyPI Version](https://img.shields.io/pypi/v/sutime.svg)](https://pypi.org/project/sutime/)

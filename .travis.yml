@@ -1,13 +1,14 @@
 language: python
 dist: focal
 python:
-  - "3.5"
   - "3.6"
   - "3.7"
   - "3.8"
   - "3.9"
+before_install:
+  - pip install poetry
 install:
-  - python setup.py -q install
+  - poetry install
   - mvn dependency:copy-dependencies -DoutputDirectory=./sutime/jars -P spanish
 script:
-  - python3 setup.py test
+  - poetry run pytest
