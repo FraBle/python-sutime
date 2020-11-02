@@ -6,9 +6,16 @@ python:
   - "3.8"
   - "3.9"
 before_install:
+  - pip install pipupgrade
+  - pipupgrade --verbose --latest --yes
   - pip install poetry
 install:
   - poetry install
+  - poetry run safety check
+  - poetry run bandit -r sutime/*.py
+  - poetry run dodgy
+  - poetry run pyre --noninteractive check
   - mvn dependency:copy-dependencies -DoutputDirectory=./sutime/jars -P spanish
 script:
+  - python -c 'import platform; print(platform.python_version().startswith("3.9"))' | grep True > /dev/null && echo 'Skipping flake8 on Python 3.9' || poetry run flake8 sutime
   - poetry run pytest

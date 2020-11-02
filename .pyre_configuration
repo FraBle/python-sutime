@@ -1,0 +1,7 @@
+{
+  "source_directories": [
+    "./sutime"
+  ],
+  "exclude": [".*/test_.*", ".*/conftest.*"],
+  "workers": 4
+}

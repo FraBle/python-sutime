@@ -53,6 +53,8 @@ cmake-build-*/
 
 # IntelliJ
 out/
+.idea/
+*iml
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -262,6 +264,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.pyre_configuration.local
 
 # pytype static type analyzer
 .pytype/
