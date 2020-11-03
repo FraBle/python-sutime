@@ -87,6 +87,7 @@ class SUTime(object):
         self.mark_time_ranges = mark_time_ranges
         self.include_range = include_range
         self._is_loaded = False
+        self._sutime = None
         self._lock = threading.Lock()
         module_root = Path(__file__).resolve().parent
         self.jars = Path(jars) if jars else module_root / 'jars'
@@ -99,21 +100,7 @@ class SUTime(object):
             self._classpath = self._create_classpath()
             self._start_jvm(jvm_flags)
 
-        try:
-            # make it thread-safe
-            if threading.active_count() > 1:
-                if not jpype.isThreadAttachedToJVM():
-                    jpype.attachThreadToJVM()
-            self._lock.acquire()
-            wrapper = jpype.JClass(self._sutime_java_class)
-            self._sutime = wrapper(
-                self.mark_time_ranges, self.include_range, language,
-            )
-            self._is_loaded = True
-        except Exception as exc:
-            sys.exit('Could not load JVM: {0}'.format(exc))
-        finally:
-            self._lock.release()
+        self._load_java_wrapper_class(language)
 
     def parse(
         self, input_str: str, reference_date: Optional[str] = '',
@@ -142,6 +129,23 @@ class SUTime(object):
                 input_str, reference_date,
             )))
         return json.loads(str(self._sutime.annotate(input_str)))
+
+    def _load_java_wrapper_class(self, language: Optional[str]):
+        try:
+            # make it thread-safe
+            if threading.active_count() > 1:
+                if not jpype.isThreadAttachedToJVM():
+                    jpype.attachThreadToJVM()
+            self._lock.acquire()
+            wrapper = jpype.JClass(self._sutime_java_class)
+            self._sutime = wrapper(
+                self.mark_time_ranges, self.include_range, language,
+            )
+            self._is_loaded = True
+        except Exception as exc:
+            sys.exit('Could not load JVM: {0}'.format(exc))
+        finally:
+            self._lock.release()
 
     def _check_language_model_dependency(self, language: str):
         if language not in self._languages:
