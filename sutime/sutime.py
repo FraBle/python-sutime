@@ -128,8 +128,8 @@ class SUTime(object):
                 Defaults to `''`.
 
         Returns:
-            A list of dicts with the result from the SUTimeWrapper.annotate()
-                call.
+            A list of dicts with the result from the `SUTimeWrapper.annotate()`
+            call.
 
         Raises:
             RuntimeError: An error occurs when CoreNLP is not loaded.

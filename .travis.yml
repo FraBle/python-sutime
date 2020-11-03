@@ -20,6 +20,8 @@ script:
   - python -c 'import platform; print(platform.python_version().startswith("3.9"))' | grep True > /dev/null && echo 'Skipping flake8 on Python 3.9' || poetry run flake8 sutime
   - poetry run pytest
   - poetry build
+  - make -C docs/ html
+  - touch docs/build/html/.nojekyll
 deploy:
   - provider: releases
     api_key:
@@ -29,6 +31,14 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
+  - provider: pages
+    token:
+      secure: "Pjp8cawO021uxziqDvbil8UoRNakQlIc33hVnqGidfBM0Refeok0uA8xM8rvdn5zgZGLb48UyI4kYHRi8sggHHCBdCVLP2G3O8DI7gaV7wxRtWsadulRJyZpbnoaT+htGqtcKE5911VXC2bRCKTRRpftnCWGtTwbuH7E3DecvDWJTX+O2vGo1U30EZMVfmkf9robN66G+U5P5C+7x+uJpUX4UkbTINbRAZra82Jl1PPiMtPCi60Tx3s2TbzSkQl2tUj7D0XU6VeTtCDL1d/PUGV68C2pVnjJ17ppMspx0Qlof4+m/AznQ8MgEJ82JPVLMNOn8aZBZ5O1GBUdCGQRMBWVQYGcpocX0xv6PEhUxgmtmpzPzB6gf+ISyyLuMOg8pSQphM7+4dY6/xNY9/BhQHmpG6QRKTQHtssKoeo5i5AaB4WU7Vg8EbdjHhOKY8ovcrmYkaCxU1J2u6Kl3R0kszHOXm548+wHcUV8Df8MzUS3hqoH3+lODLFVzZmQz40GCYKLm0u0furO39r7HE2UYFB5h/rXbrYkdXhbXKHW3LfVB1mfudxp5JJXLQNV/X69amVAuubjpRkU6OgnILmbfaLRC39nuFirkvm9J5xGO9v/UYj6nUGncRNLzX7i7UyCAn5hhvI0HDcCji6XbwA6J+WPXzMhnzbxhAv5e4NkRmo="
+    skip_cleanup: true
+    keep_history: true
+    local_dir: ./docs/build/html/
+    on:
+      branch: master
   - provider: pypi
     username: "__token__"
     password:
