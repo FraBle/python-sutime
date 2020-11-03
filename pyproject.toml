@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sutime"
-version = "1.0.0"
+version = "1.0.1"
 description = "A Python wrapper for Stanford CoreNLP's SUTime"
 license = "GPL-3.0-or-later"
 authors = ["Frank Blechschmidt <contact@frank-blechschmidt.com>"]

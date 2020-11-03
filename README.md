@@ -1,5 +1,6 @@
 # sutime
-*Python wrapper for Stanford CoreNLP's [SUTime](http://nlp.stanford.edu/software/sutime.shtml) Java library.*
+*Python wrapper for Stanford CoreNLP's [SUTime](http://nlp.stanford.edu/software/sutime.shtml) Java library.*  
+Docs are also hosted on [GitHub Pages](https://frable.github.io/python-sutime/).
 
 ## Build Status
 
