@@ -5,17 +5,18 @@
 
 #### Travis CI Builds
 [![Travis CI](https://travis-ci.com/FraBle/python-sutime.svg?branch=master)](https://travis-ci.com/FraBle/python-sutime)
->>>>>>> c66aec1... Switch to Poetry and wemake-python-styleguide
 
 #### PyPI
 [![PyPI Version](https://img.shields.io/pypi/v/sutime.svg)](https://pypi.org/project/sutime/)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/sutime.svg)](https://pypi.org/project/sutime/)
 
 #### Code Quality
-[![Codacy Grade](https://img.shields.io/codacy/grade/05d69a800b2c4854bc1f98d9281b35a8.svg)](https://app.codacy.com/project/FraBle/python-sutime/dashboard)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5b9cb504d8b040b38f86157ad75ecd96)](https://app.codacy.com/gh/FraBle/python-sutime?utm_source=github.com&utm_medium=referral&utm_content=FraBle/python-sutime&utm_campaign=Badge_Grade)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/FraBle/python-sutime.svg)](https://scrutinizer-ci.com/g/FraBle/python-sutime/)
 [![Coverity Scan](https://img.shields.io/coverity/scan/22017.svg)](https://scan.coverity.com/projects/python-sutime)
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/FraBle/python-sutime.svg)](https://codeclimate.com/github/FraBle/python-sutime/maintainability)
+[![CodeFactor](https://www.codefactor.io/repository/github/frable/python-sutime/badge)](https://www.codefactor.io/repository/github/frable/python-sutime)
+[![Requirements Status](https://requires.io/github/FraBle/python-sutime/requirements.svg?branch=master)](https://requires.io/github/FraBle/python-sutime/requirements/?branch=master)
 
 ## Installation
 
