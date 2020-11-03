@@ -3,42 +3,42 @@
 
 ## Build Status
 
-#### CircleCI Builds
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5b9cb504d8b040b38f86157ad75ecd96)](https://app.codacy.com/gh/FraBle/python-sutime?utm_source=github.com&utm_medium=referral&utm_content=FraBle/python-sutime&utm_campaign=Badge_Grade)
-[![CircleCI](https://img.shields.io/circleci/project/github/FraBle/python-sutime.svg)](https://circleci.com/gh/FraBle/python-sutime)
+#### Travis CI Builds
+[![Travis CI](https://travis-ci.com/FraBle/python-sutime.svg?branch=master)](https://travis-ci.com/FraBle/python-sutime)
 
 #### PyPI
 [![PyPI Version](https://img.shields.io/pypi/v/sutime.svg)](https://pypi.org/project/sutime/)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/sutime.svg)](https://pypi.org/project/sutime/)
 
 #### Code Quality
-[![Codacy Grade](https://img.shields.io/codacy/grade/05d69a800b2c4854bc1f98d9281b35a8.svg)](https://app.codacy.com/project/FraBle/python-sutime/dashboard)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5b9cb504d8b040b38f86157ad75ecd96)](https://app.codacy.com/gh/FraBle/python-sutime?utm_source=github.com&utm_medium=referral&utm_content=FraBle/python-sutime&utm_campaign=Badge_Grade)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/FraBle/python-sutime.svg)](https://scrutinizer-ci.com/g/FraBle/python-sutime/)
-[![Coverity Scan](https://img.shields.io/coverity/scan/17101.svg)](https://scan.coverity.com/projects/frable-python-sutime)
+[![Coverity Scan](https://img.shields.io/coverity/scan/22017.svg)](https://scan.coverity.com/projects/python-sutime)
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/FraBle/python-sutime.svg)](https://codeclimate.com/github/FraBle/python-sutime/maintainability)
+[![CodeFactor](https://www.codefactor.io/repository/github/frable/python-sutime/badge)](https://www.codefactor.io/repository/github/frable/python-sutime)
+[![Requirements Status](https://requires.io/github/FraBle/python-sutime/requirements.svg?branch=master)](https://requires.io/github/FraBle/python-sutime/requirements/?branch=master)
 
 ## Installation
 
 ```bash
->> pip install setuptools_scm jpype1 # install pre-reqs
+>> # Ideally, create a virtual environment before installing any dependencies
 >> pip install sutime
->> #first cd into python-sutime/sutime, then use package pom.xml to install all Java dependencies via Maven into ./jars
->> mvn dependency:copy-dependencies -DoutputDirectory=./jars
+>> # Install Java dependencies
+>> mvn dependency:copy-dependencies -DoutputDirectory=./jars -f $(python3 -c 'import importlib; import pathlib; print(pathlib.Path(importlib.util.find_spec("sutime").origin).parent / "pom.xml")')
 ```
 
-Run the following command to add the Spanish language model:
-```bash
->> #again from python-sutime/sutime, run:
->> mvn dependency:copy-dependencies -DoutputDirectory=./jars -P spanish
-```
+Append `-P spanish` to the `mvn` command to include the Spanish language model.
 
 ## Supported Languages
+
 SUTime currently supports only English, British and Spanish ([Source](https://github.com/stanfordnlp/CoreNLP/tree/master/src/edu/stanford/nlp/time/rules)).
 This Python wrapper is prepared to support the other CoreNLP languages (e.g. German) as well as soon as they get added to SUTime.
 The following command can be used to download the language models for `arabic`, `chinese`, `english`, `french`, `german`, and `spanish`:
+
 ```bash
->> mvn dependency:copy-dependencies -DoutputDirectory=./jars -P <language>
+>> mvn dependency:copy-dependencies -DoutputDirectory=./jars -f $(python -c 'import importlib; import pathlib; print(pathlib.Path(importlib.util.find_spec("sutime").origin).parent / "pom.xml")') -P <language>
 ```
+
 *However, SUTime only supports a subset (default model and `spanish`) of CoreNLP's languages and the other language models will get ignored.*
 
 ## Example
@@ -48,10 +48,8 @@ import json
 from sutime import SUTime
 
 if __name__ == '__main__':
-    test_case = u'I need a desk for tomorrow from 2pm to 3pm'
-
-    sutime = SUTime(mark_time_ranges=True,include_range=True)
-
+    test_case = 'I need a desk for tomorrow from 2pm to 3pm'
+    sutime = SUTime(mark_time_ranges=True, include_range=True)
     print(json.dumps(sutime.parse(test_case), sort_keys=True, indent=4))
 ```
 
@@ -63,8 +61,9 @@ Result:
         "end": 26,
         "start": 18,
         "text": "tomorrow",
+        "timex-value": "2020-11-03",
         "type": "DATE",
-        "value": "2016-10-14"
+        "value": "2020-11-03"
     },
     {
         "end": 42,
@@ -84,41 +83,53 @@ Other examples can be found in the [test](https://github.com/FraBle/python-sutim
 ## Functions
 
 ```python
-SUTime(jars=None, jvm_started=False, mark_time_ranges=False, include_range=False,
-       jvm_flags=None, language='english')
+SUTime(
+    jars: Optional[str] = None,
+    jvm_started: Optional[bool] = False,
+    mark_time_ranges: Optional[bool] = False,
+    include_range: Optional[bool] = False,
+    jvm_flags: Optional[List[str]] = None,
+    language: Optional[str] = 'english',
+):
     """
-    jars: List of paths to the SUTime Java dependencies.
-    jvm_started: Optional attribute to specify if the JVM has already been
-        started (with all Java dependencies loaded).
-    mark_time_ranges: Optional attribute to specify CoreNLP property
-        sutime.markTimeRanges. Default is False.
-        "Tells sutime to mark phrases such as 'From January to March'
-        instead of marking 'January' and 'March' separately"
-    include_range: Optional attribute to specify CoreNLP property
-        sutime.includeRange. Default is False.
-        "Tells sutime to mark phrases such as 'From January to March'
-        instead of marking 'January' and 'March' separately"
-    jvm_flags: Optional attribute to specify an iterable of string flags
-        to be provided to the JVM at startup. For example, this may be
-        used to specify the maximum heap size using '-Xmx'. Has no effect
-        if jvm_started is set to True. Default is None.
-    language: Optional attribute to select language. The following options
-        are supported: english (/en), british, spanish (/es). Default is
-        english.
+    Args:
+        jars (Optional[str]): Path to previously downloaded SUTime Java
+            dependencies. Defaults to False.
+        jvm_started (Optional[bool]): Flag to indicate that JVM has been
+            already started (with all Java dependencies loaded). Defaults
+            to False.
+        mark_time_ranges (Optional[bool]): SUTime flag for
+            sutime.markTimeRanges. Defaults to False.
+            "Whether or not to recognize time ranges such as 'July to
+            August'"
+        include_range (Optional[bool]): SUTime flag for
+            sutime.includeRange. Defaults to False.
+            "Whether or not to add range info to the TIMEX3 object"
+        jvm_flags (Optional[List[str]]): List of flags passed to JVM. For
+            example, this may be used to specify the maximum heap size
+            using '-Xmx'. Has no effect if `jvm_started` is set to True.
+            Defaults to None.
+        language (Optional[str]): Selected language. Currently supported
+            are: english (/en), british, spanish (/es). Defaults to
+            `english`.
     """
 
-sutime.parse(input_str, reference_date=''):
-    """Parses datetime information out of string input.
+sutime.parse(input_str: str, reference_date: Optional[str] = '') -> List[Dict]:
+    """Parse datetime information out of string input.
 
     It invokes the SUTimeWrapper.annotate() function in Java.
 
     Args:
-        input_str: The input as string that has to be parsed.
-        reference_date: Optional reference data for SUTime.
+        input_str (str): The input as string that has to be parsed.
+        reference_date (Optional[str]): Optional reference data for SUTime.
+            Defaults to `''`.
 
     Returns:
-        A list of dicts with the result from the SUTimeWrapper.annotate()
-            call.
+        A list of dicts with the result from the `SUTimeWrapper.annotate()`
+        call.
+
+    Raises:
+        RuntimeError: An error occurs when CoreNLP is not loaded.
     """
 ```
 

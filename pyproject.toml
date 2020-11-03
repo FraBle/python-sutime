@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "sutime"
+version = "1.0.0"
+description = "A Python wrapper for Stanford CoreNLP's SUTime"
+license = "GPL-3.0-or-later"
+authors = ["Frank Blechschmidt <contact@frank-blechschmidt.com>"]
+readme = "README.md"
+homepage = "https://github.com/FraBle/python-sutime"
+repository = "https://github.com/FraBle/python-sutime"
+documentation = "https://github.com/FraBle/python-sutime"
+keywords = [
+    "stanford",
+    "corenlp",
+    "sutime",
+    "datetime",
+    "nlp",
+]
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Topic :: Scientific/Engineering :: Artificial Intelligence',
+    'Topic :: Scientific/Engineering :: Human Machine Interfaces',
+    'Topic :: Software Development :: Libraries',
+    'Topic :: Text Processing :: Linguistic',
+]
+packages = [
+    { include = "sutime" },
+]
+include = [
+    "sutime/jars/stanford-corenlp-sutime-python-1.4.0.jar",
+    "sutime/pom.xml",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.6,<4.0"
+JPype1 = "^1.1.2"
+
+[tool.poetry.dev-dependencies]
+aniso8601 = "^8.0.0"
+autopep8 = "^1.5.4"
+bandit = "^1.6.2"
+doc8 = "^0.8.1"
+dodgy = "^0.2.1"
+flake8 = "^3.8.4"
+pyre-check = "^0.0.57"
+pytest = "^6.1.2"
+python-dateutil = "^2.8.1"
+safety = "^1.9.0"
+Sphinx = "^3.2.1"
+sphinx-typlog-theme = "^0.8.0"
+wemake-python-styleguide = "^0.14.1"
+
+[build-system]
+requires = ["poetry>=1.1.4"]
+build-backend = "poetry.masonry.api"
