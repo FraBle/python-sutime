@@ -66,9 +66,9 @@ class SUTime(object):
         Args:
             jars (Optional[str]): Path to previously downloaded SUTime Java
                 dependencies. Defaults to False.
-            jvm_started (Optional[bool]): Flag to indicate that JVM has already
-                been started (with all Java dependencies loaded). Defaults to
-                False.
+            jvm_started (Optional[bool]): Flag to indicate that JVM has been
+                already started (with all Java dependencies loaded). Defaults
+                to False.
             mark_time_ranges (Optional[bool]): SUTime flag for
                 sutime.markTimeRanges. Defaults to False.
                 "Whether or not to recognize time ranges such as 'July to
@@ -132,7 +132,7 @@ class SUTime(object):
                 call.
 
         Raises:
-            RuntimeError: An error occurres when CoreNLP is not loaded.
+            RuntimeError: An error occurs when CoreNLP is not loaded.
         """
         if self._is_loaded is False:
             raise RuntimeError('Please load SUTime first!')
