@@ -89,7 +89,6 @@ class SUTime(object):
         self._is_loaded = False
         self._sutime = None
         self._lock = threading.Lock()
-        module_root = Path(__file__).resolve().parent
         self.jars = Path(jars) if jars else os.path.join(
                 Path(importlib.util.find_spec('sutime').origin).parent, 'jars')
 
