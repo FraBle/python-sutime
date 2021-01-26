@@ -90,7 +90,8 @@ class SUTime(object):
         self._sutime = None
         self._lock = threading.Lock()
         module_root = Path(__file__).resolve().parent
-        self.jars = Path(jars) if jars else module_root / 'jars'
+        self.jars = Path(jars) if jars else os.path.join(
+                Path(importlib.util.find_spec('sutime').origin).parent, 'jars')
 
         self._check_language_model_dependency(
             language.lower() if language else '',
